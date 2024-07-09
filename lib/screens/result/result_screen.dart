@@ -165,7 +165,7 @@ class ResultScreen extends StatelessWidget {
                         final SharedPreferences prefs = await _prefs;
                         final role = prefs.get('role');
                         if (role == 'dokter') {
-                          Get.off(() => const HomeScreen());
+                          Get.off(() => HomeScreen());
                         } else if (role == 'pasien') {
                           Get.off(() => const HomeScreenPasien());
                         }

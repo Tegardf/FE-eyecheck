@@ -39,7 +39,7 @@ class InitializerScreen extends StatelessWidget {
           final json = jsonDecode(response.body);
           if (json['role'] == 'dokter') {
             prefs.setString('role', 'dokter');
-            Get.off(() => const HomeScreen());
+            Get.off(() => HomeScreen());
           } else if (json['role'] == 'pasien') {
             prefs.setString('role', 'pasien');
             Get.off(() => const HomeScreenPasien());

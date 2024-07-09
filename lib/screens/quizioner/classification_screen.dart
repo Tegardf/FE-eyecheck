@@ -53,7 +53,8 @@ class ClassificationScreen extends StatelessWidget {
               () => classificationController.count.value == symptoms.length - 1
                   ? ElevatedButton(
                       onPressed: () async {
-                        print('test:${classificationController.cfValues}');
+                        // print('test:${classificationController.cfValues}');
+                        classificationController.count.value = 0;
                         await classificationController.klasifikasi();
                       },
                       child: const Text("Send"),

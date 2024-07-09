@@ -62,16 +62,17 @@ class RegisterationController extends GetxController {
       if (response.statusCode == 201) {
         final json = jsonDecode(response.body);
         var token = json['token'];
-        print(token);
+        var role = json['role'];
+        // print(token);
         final SharedPreferences prefs = await _prefs;
         await prefs.setString('token', token);
+        await prefs.setString('role', role);
         usernameController.clear();
         passwordController.clear();
         nameController.clear();
         tglController.clear();
-        var role = json['role'];
         if (role == 'dokter') {
-          Get.off(const HomeScreen());
+          Get.off(HomeScreen());
         } else if (role == 'pasien') {
           Get.off(const HomeScreenPasien());
         }

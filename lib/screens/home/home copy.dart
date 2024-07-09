@@ -1,3 +1,4 @@
+// import 'package:eyecheckv2/controllers/result_controller.dart';
 import 'package:eyecheckv2/controllers/user_controller.dart';
 import 'package:eyecheckv2/screens/home/widget/medical_record_widget.dart';
 import 'package:eyecheckv2/screens/home/widget/patient_form_widget.dart';
@@ -7,11 +8,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/auth_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // final UserController userController = Get.put(UserController());
   final UserController userController = Get.find<UserController>();
+  // final ResultController resultController = Get.put(ResultController());
 
   @override
   Widget build(BuildContext context) {

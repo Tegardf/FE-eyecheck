@@ -49,13 +49,14 @@ class LoginController extends GetxController {
         final json = jsonDecode(response.body);
         print(json);
         var token = json['token'];
+        var role = json['role'];
         final SharedPreferences prefs = await _prefs;
         await prefs.setString('token', token);
+        await prefs.setString('role', role);
         usernameController.clear();
         passwordController.clear();
-        var role = json['role'];
         if (role == 'dokter') {
-          Get.off(const HomeScreen());
+          Get.off(HomeScreen());
         } else if (role == 'pasien') {
           Get.off(const HomeScreenPasien());
         }
@@ -65,14 +66,15 @@ class LoginController extends GetxController {
     } catch (error) {
       Get.back();
       showDialog(
-          context: Get.context!,
-          builder: (context) {
-            return SimpleDialog(
-              title: const Text('Error'),
-              contentPadding: const EdgeInsets.all(20),
-              children: [Text(error.toString())],
-            );
-          });
+        context: Get.context!,
+        builder: (context) {
+          return SimpleDialog(
+            title: const Text('Error'),
+            contentPadding: const EdgeInsets.all(20),
+            children: [Text(error.toString())],
+          );
+        },
+      );
     }
   }
 }

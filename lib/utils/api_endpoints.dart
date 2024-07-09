@@ -1,5 +1,5 @@
 class ApiEndPoints {
-  static const String baseUrl = 'http://192.168.171.78:5000/';
+  static const String baseUrl = 'http://3.0.213.129:8000/';
   static _AuthEndPoints authEndpoints = _AuthEndPoints();
 }
 

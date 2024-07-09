@@ -18,65 +18,62 @@ class CameraScreen extends StatelessWidget {
         child: Obx(
           () {
             if (cameraManager.isCameraInitialized.value) {
-              return GestureDetector(
-                onTapDown: (details) => cameraManager.focusOnPoint(details),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: CameraPreview(cameraManager.cameraController),
+              return Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: CameraPreview(cameraManager.cameraController),
+                  ),
+                  const Align(
+                    alignment: Alignment.center,
+                    child: SquareOverlay(size: overlaySize),
+                  ),
+                  Positioned(
+                    bottom: 50,
+                    left: 20,
+                    child: IconButton(
+                      icon: const Icon(Icons.photo_library),
+                      onPressed: () async {
+                        bool stateImg =
+                            await cameraManager.pickImageFromGallery();
+                        if (stateImg) {
+                          await cameraManager.manualCropImg();
+                        } else {
+                          Get.snackbar('Error',
+                              'Failed to pick image: ${cameraManager.errorMsg}');
+                        }
+                      },
+                      iconSize: 36,
+                      color: Colors.white,
                     ),
-                    const Align(
-                      alignment: Alignment.center,
-                      child: SquareOverlay(size: overlaySize),
+                  ),
+                  Positioned(
+                    bottom: 50,
+                    left: MediaQuery.of(context).size.width / 2 - 18,
+                    child: IconButton(
+                      icon: const Icon(Icons.camera),
+                      onPressed: () async {
+                        await cameraManager.takePicture();
+                      },
+                      iconSize: 36,
+                      color: Colors.white,
                     ),
-                    Positioned(
-                      bottom: 50,
-                      left: 20,
-                      child: IconButton(
-                        icon: const Icon(Icons.photo_library),
-                        onPressed: () async {
-                          bool stateImg =
-                              await cameraManager.pickImageFromGallery();
-                          if (stateImg) {
-                            await cameraManager.manualCropImg();
-                          } else {
-                            Get.snackbar('Error',
-                                'Failed to pick image: ${cameraManager.errorMsg}');
-                          }
-                        },
-                        iconSize: 36,
-                        color: Colors.white,
-                      ),
+                  ),
+                  Positioned(
+                    bottom: 50,
+                    right: 20,
+                    child: IconButton(
+                      icon: Icon(cameraManager.flashModeSelected.value
+                          ? Icons.flash_on
+                          : Icons.flash_off),
+                      onPressed: () {
+                        cameraManager.toggleFlashMode();
+                      },
+                      iconSize: 36,
+                      color: Colors.white,
                     ),
-                    Positioned(
-                      bottom: 50,
-                      left: MediaQuery.of(context).size.width / 2 - 18,
-                      child: IconButton(
-                        icon: const Icon(Icons.camera),
-                        onPressed: () async {
-                          await cameraManager.takePicture();
-                        },
-                        iconSize: 36,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 50,
-                      right: 20,
-                      child: IconButton(
-                        icon: Icon(cameraManager.flashModeSelected.value
-                            ? Icons.flash_on
-                            : Icons.flash_off),
-                        onPressed: () {
-                          cameraManager.toggleFlashMode();
-                        },
-                        iconSize: 36,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               );
             } else {
               return const Center(
